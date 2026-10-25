@@ -71,6 +71,8 @@ def list_sessions(course_id: str | None = None):
 
 @router.post("/employees/{employee_id}/training/bookings", response_model=models.Booking, status_code=201,
              tags=["Training"])
+@router.post("/employees/{employee_id}/training/book", response_model=models.Booking, status_code=201,
+             include_in_schema=False)
 def book_session(employee_id: str, body: models.BookingCreate):
     return _call(ds.book_session, employee_id, body.session_id)
 
@@ -100,6 +102,12 @@ def list_tickets(employee_id: str):
              summary="Open a ticket to the HR, IT, Security or Payroll team")
 def create_ticket(body: models.TicketCreate):
     return _call(ds.create_ticket, body.model_dump())
+
+
+@router.post("/employees/{employee_id}/tickets", response_model=models.Ticket, status_code=201,
+             include_in_schema=False)
+def create_employee_ticket(employee_id: str, body: dict):
+    return _call(ds.create_ticket, {**body, "employee_id": employee_id})
 
 
 @router.get("/policies", response_model=list[models.PolicySummary], tags=["Policies"])

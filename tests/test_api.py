@@ -51,7 +51,7 @@ def test_access_request_post_does_not_enforce_prerequisites(client):
 def test_book_aml_session(client):
     sessions = client.get("/api/training/sessions", params={"course_id": "AML-101"}).json()
     assert [s["id"] for s in sessions if s["seats_available"] > 0][0] == "S-AML-1105"
-    r = client.post(f"/api/employees/{GIULIO}/training/bookings", json={"session_id": "S-AML-1105"})
+    r = client.post(f"/api/employees/{GIULIO}/training/book", json={"session_id": "S-AML-1105"})
     assert r.status_code == 201 and r.json()["session"]["seats_available"] == 3
     aml = [t for t in client.get(f"/api/employees/{GIULIO}/training").json() if t["course_id"] == "AML-101"][0]
     assert aml["status"] == "booked"
