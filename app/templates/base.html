@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Benvenuto{% endblock %} · Banca Futura</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/benvenuto.css') }}">
+</head>
+<body data-employee-id="{{ employee.id }}">
+  <header class="topbar">
+    <a class="brand" href="/?employee={{ employee.id }}">
+      <span class="logo">BF</span>
+      <span><strong>Banca Futura</strong><small>Benvenuto · new-hire portal</small></span>
+    </a>
+    <nav>
+      <a href="/?employee={{ employee.id }}">Dashboard</a>
+      <a href="/policies?employee={{ employee.id }}">Policies</a>
+      <a href="/docs" target="_blank">API</a>
+    </nav>
+    <div class="user">
+      <span class="avatar">{{ employee.first_name[0] }}{{ employee.last_name[0] }}</span>
+      <span>{{ employee.full_name }}</span>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">Banca Futura S.p.A. is a fictional bank. All data is synthetic.</footer>
+
+  <!-- Onboarding assistant (placeholder until the agent is connected) -->
+  <button id="assistant-bubble" class="assistant-bubble" aria-label="Open assistant" title="Ask Benvenuto Assistant">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.9 2 11.6c0 2.4 1.2 4.6 3.1 6.1L4.3 21l3.9-2c1.2.4 2.5.6 3.8.6 5.5 0 10-3.9 10-8.6S17.5 3 12 3Z"/></svg>
+  </button>
+  <section id="assistant-panel" class="assistant-panel" hidden aria-label="Benvenuto Assistant">
+    <header>
+      <div><strong>Benvenuto Assistant</strong><small id="assistant-status">Preview</small></div>
+      <button id="assistant-close" aria-label="Close">×</button>
+    </header>
+    <div id="assistant-messages" class="messages">
+      <div class="msg bot">Ciao {{ employee.first_name }}! Ask me about your laptop, badge, training, access requests or expenses.</div>
+    </div>
+    <form id="assistant-form">
+      <input id="assistant-input" autocomplete="off" placeholder="Type a question…">
+      <button type="submit">Send</button>
+    </form>
+  </section>
+  <script src="{{ url_for('static', path='js/assistant.js') }}"></script>
+</body>
+</html>

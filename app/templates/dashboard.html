@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% macro pill(status) -%}
+  <span class="pill pill-{{ status }}">{{ status | replace('_', ' ') }}</span>
+{%- endmacro %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">
+      {% if employee.onboarding_day > 0 %}Day {{ employee.onboarding_day }} of your onboarding{% else %}You start in {{ 1 - employee.onboarding_day }} days{% endif %}
+      · {{ today }}
+    </p>
+    <h1>Benvenuta/o, {{ employee.first_name }}!</h1>
+    <p>{{ employee.role }} · {{ employee.team }} · {{ employee.location }}<br>
+       Manager: {{ employee.manager_name }} · Start date: {{ employee.start_date }}</p>
+  </div>
+  <div class="progress-ring" style="--p: {{ progress }}">
+    <span>{{ progress }}%</span><small>checklist</small>
+  </div>
+  <form class="persona" method="get" action="/">
+    <label for="employee">View as</label>
+    <select id="employee" name="employee" onchange="this.form.submit()">
+      {% for h in new_hires %}<option value="{{ h.id }}" {% if h.id == employee.id %}selected{% endif %}>{{ h.full_name }} ({{ h.id }})</option>{% endfor %}
+    </select>
+  </form>
+</section>
+
+<div class="grid">
+  <article class="card wide">
+    <h2>Onboarding checklist</h2>
+    <ul class="checklist">
+      {% for item in checklist %}
+      <li class="{{ item.status }}">
+        <span class="tag">{{ item.category }}</span>{{ item.title }}
+        <span class="due">due {{ item.due_date }}</span>{{ pill(item.status) }}
+      </li>
+      {% endfor %}
+    </ul>
+  </article>
+
+  <article class="card">
+    <h2>Laptop</h2>
+    {% if laptop %}
+    <p class="big">{{ laptop.model }}</p>
+    <dl>
+      <dt>Status</dt><dd>{{ pill(laptop.status) }}</dd>
+      <dt>Expected</dt><dd>{{ laptop.expected_delivery or '-' }}</dd>
+      <dt>Tracking</dt><dd>{{ laptop.carrier or '' }} {{ laptop.tracking_number or '-' }}</dd>
+      <dt>Deliver to</dt><dd>{{ laptop.delivery_address }}</dd>
+    </dl>
+    {% endif %}
+    <h3>Accounts</h3>
+    <ul class="plain">{% for a in accounts %}<li>{{ a.system }} {{ pill(a.status) }}</li>{% endfor %}</ul>
+  </article>
+
+  <article class="card">
+    <h2>Badge</h2>
+    <dl>
+      <dt>Status</dt><dd>{{ pill(badge.status) }}</dd>
+      <dt>Tier</dt><dd>{{ badge.tier | replace('_', ' ') }}</dd>
+      <dt>Number</dt><dd>{{ badge.badge_number or '-' }}</dd>
+      <dt>Sites</dt><dd>{{ badge.sites | join(', ') }}</dd>
+      {% if badge.temporary_pass %}<dt>Temp pass</dt><dd>{{ badge.temporary_pass }}</dd>{% endif %}
+    </dl>
+  </article>
+
+  <article class="card">
+    <h2>Mandatory training</h2>
+    <table>
+      <tr><th>Course</th><th>Due</th><th>Status</th></tr>
+      {% for t in training %}
+      <tr><td>{{ t.title }}</td><td class="date">{{ t.due_date }}</td><td>{{ pill(t.status) }}</td></tr>
+      {% endfor %}
+    </table>
+  </article>
+
+  <article class="card">
+    <h2>Access requests</h2>
+    {% if access_requests %}
+    <table>
+      <tr><th>System</th><th>Requested</th><th>Status</th></tr>
+      {% for r in access_requests %}
+      <tr><td>{{ r.system_name }}<small class="muted"> {{ r.id }}</small></td><td class="date">{{ r.requested_on }}</td>
+          <td>{{ pill(r.status) }}{% if r.days_pending >= 2 %} <span class="warn">{{ r.days_pending }} days</span>{% endif %}</td></tr>
+      {% endfor %}
+    </table>
+    {% else %}<p class="muted">No access requests yet.</p>{% endif %}
+  </article>
+
+  <article class="card">
+    <h2>Relocation expenses</h2>
+    {% if expenses %}
+    <table>
+      <tr><th>Date</th><th>Description</th><th class="num">Amount</th><th>Status</th></tr>
+      {% for e in expenses %}
+      <tr><td class="date">{{ e.expense_date }}</td><td>{{ e.description }}</td><td class="num">€ {{ '%.2f' % e.amount }}</td><td>{{ pill(e.status) }}</td></tr>
+      {% endfor %}
+    </table>
+    {% else %}<p class="muted">No expense claims.</p>{% endif %}
+    <p class="muted small">Limits and receipts: see the <a href="/policies/expenses-relocation?employee={{ employee.id }}">relocation policy</a>.</p>
+  </article>
+
+  <article class="card">
+    <h2>My tickets</h2>
+    {% if tickets %}
+    <ul class="plain">{% for t in tickets %}<li>{{ t.id }} · {{ t.queue }} · {{ t.subject }} {{ pill(t.status) }}</li>{% endfor %}</ul>
+    {% else %}<p class="muted">No open tickets. Need help? Ask the assistant.</p>{% endif %}
+  </article>
+</div>
+{% endblock %}
