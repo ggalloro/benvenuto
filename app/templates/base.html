@@ -29,7 +29,8 @@
 
   <footer class="footer">Banca Futura S.p.A. is a fictional bank. All data is synthetic.</footer>
 
-  <!-- Onboarding assistant (placeholder until the agent is connected) -->
+  {% if assistant_enabled %}
+  <!-- Onboarding assistant (shown when CONCIERGE_AGENT_ID or BENVENUTO_ASSISTANT_ENABLED is set) -->
   <button id="assistant-bubble" class="assistant-bubble" aria-label="Open assistant" title="Ask Benvenuto Assistant">
     <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.9 2 11.6c0 2.4 1.2 4.6 3.1 6.1L4.3 21l3.9-2c1.2.4 2.5.6 3.8.6 5.5 0 10-3.9 10-8.6S17.5 3 12 3Z"/></svg>
   </button>
@@ -47,5 +48,6 @@
     </form>
   </section>
   <script src="{{ url_for('static', path='js/assistant.js') }}"></script>
+  {% endif %}
 </body>
 </html>

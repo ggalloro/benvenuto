@@ -18,13 +18,15 @@ def dashboard(request: Request, employee: str = config.DEFAULT_EMPLOYEE_ID):
         context = onboarding_service.dashboard(employee)
     except ds.NotFound:
         raise HTTPException(404, f"Employee {employee} not found")
+    context["assistant_enabled"] = config.assistant_enabled()
     return templates.TemplateResponse(request, "dashboard.html", context)
 
 
 @router.get("/policies", response_class=HTMLResponse)
 def policies(request: Request, employee: str = config.DEFAULT_EMPLOYEE_ID):
     return templates.TemplateResponse(request, "policies.html", dict(
-        policies=policy_service.list_policies(), employee=ds.get_employee(employee), policy=None))
+        policies=policy_service.list_policies(), employee=ds.get_employee(employee), policy=None,
+        assistant_enabled=config.assistant_enabled()))
 
 
 @router.get("/policies/{name}", response_class=HTMLResponse)
@@ -35,4 +37,4 @@ def policy(request: Request, name: str, employee: str = config.DEFAULT_EMPLOYEE_
         raise HTTPException(404, f"Policy {name} not found")
     return templates.TemplateResponse(request, "policies.html", dict(
         policies=policy_service.list_policies(), employee=ds.get_employee(employee),
-        policy=dict(name=name, html=html)))
+        policy=dict(name=name, html=html), assistant_enabled=config.assistant_enabled()))

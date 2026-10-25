@@ -10,7 +10,7 @@ Benvenuto is the onboarding portal that new hires at **Banca Futura** (a fiction
 - **Service desk**: tickets to the HR, IT, Security and Payroll teams.
 - **Policies**: company policies as markdown documents in [`policies/`](policies/).
 
-The portal has a floating **assistant bubble** that is not connected to anything yet: `POST /api/assistant` answers "Assistant not available yet" and the frontend calls it through a single `askAssistant()` function in [`app/static/js/assistant.js`](app/static/js/assistant.js).
+The portal includes a floating **assistant bubble** (hidden by default behind a feature flag until `CONCIERGE_AGENT_ID` or `BENVENUTO_ASSISTANT_ENABLED=1` is set): `POST /api/assistant` answers "Assistant not available yet" and the frontend calls it through a single `askAssistant()` function in [`app/static/js/assistant.js`](app/static/js/assistant.js).
 
 > All people, systems, vendors and data in this repository are synthetic.
 

@@ -92,7 +92,11 @@ def test_assistant_placeholder(client):
     assert r.json()["available"] is False
 
 
-def test_dashboard_renders(client):
+def test_dashboard_renders(client, monkeypatch):
+    monkeypatch.delenv("CONCIERGE_AGENT_ID", raising=False)
+    monkeypatch.delenv("BENVENUTO_ASSISTANT_ENABLED", raising=False)
     html = client.get("/?employee=E1001").text
-    assert "Giulio" in html and "assistant-bubble" in html
+    assert "Giulio" in html and "assistant-bubble" not in html
+    monkeypatch.setenv("CONCIERGE_AGENT_ID", "test-engine")
+    assert "assistant-bubble" in client.get("/?employee=E1001").text
     assert client.get("/policies/expenses-relocation").status_code == 200

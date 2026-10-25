@@ -18,3 +18,13 @@ TODAY = date.fromisoformat(os.getenv("BENVENUTO_TODAY", "2026-10-29"))
 
 # Default persona shown on the dashboard.
 DEFAULT_EMPLOYEE_ID = os.getenv("BENVENUTO_DEFAULT_EMPLOYEE", "E1001")
+
+
+def assistant_enabled() -> bool:
+    """True when the assistant chat bubble is enabled (via CONCIERGE_AGENT_ID or BENVENUTO_ASSISTANT_ENABLED)."""
+    flag = os.getenv("BENVENUTO_ASSISTANT_ENABLED", "").strip().lower()
+    if flag in ("1", "true", "yes", "on"):
+        return True
+    if flag in ("0", "false", "no", "off"):
+        return False
+    return bool(os.getenv("CONCIERGE_AGENT_ID", "").strip())
