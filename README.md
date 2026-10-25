@@ -25,7 +25,7 @@ uv run uvicorn app.main:app --reload
 ```
 
 Open:
-- Dashboard: http://localhost:8000 (persona picker in the header card; default Giulia Rossi, `E1001`)
+- Dashboard: http://localhost:8000 (persona picker in the header card; default Giulio Rossi, `E1001`)
 - Policies: http://localhost:8000/policies
 - OpenAPI docs: http://localhost:8000/docs (spec at `/openapi.json`)
 

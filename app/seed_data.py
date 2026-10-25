@@ -12,7 +12,7 @@ EMPLOYEES = [
          team="Torino Centro Branch", department="Retail Banking", manager_id=None,
          start_date="2015-01-12", location="Torino, Via Roma", is_new_hire=0, origin_city=None),
     # New hires.
-    dict(id="E1001", first_name="Giulia", last_name="Rossi", role="Junior Software Developer",
+    dict(id="E1001", first_name="Giulio", last_name="Rossi", role="Junior Software Developer",
          team="Digital Channels", department="Technology", manager_id="E0042",
          start_date="2026-10-27", location="Milano, Piazza Gae Aulenti", is_new_hire=1, origin_city="Bari"),
     dict(id="E1002", first_name="Luca", last_name="Esposito", role="Data Analyst",
@@ -58,7 +58,7 @@ LAPTOPS = [
 ]
 
 ACCOUNTS = [
-    ("E1001", "Corporate email", "giulia.rossi@bancafutura.example", "active"),
+    ("E1001", "Corporate email", "giulio.rossi@bancafutura.example", "active"),
     ("E1001", "Single sign-on and MFA", "grossi", "active"),
     ("E1001", "VPN", "grossi", "pending_laptop"),
     ("E1002", "Corporate email", "luca.esposito@bancafutura.example", "active"),

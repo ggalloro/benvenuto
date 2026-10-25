@@ -13,7 +13,7 @@ DB_PATH = Path(os.getenv("BENVENUTO_DB", BASE_DIR / "data" / "benvenuto.db"))
 POLICIES_DIR = Path(os.getenv("BENVENUTO_POLICIES_DIR", BASE_DIR / "policies"))
 
 # The portal runs on a fixed "business date" (BENVENUTO_TODAY) so results are repeatable.
-# Giulia Rossi starts on 2026-10-27, so 2026-10-29 is her day 3.
+# Giulio Rossi starts on 2026-10-27, so 2026-10-29 is his day 3.
 TODAY = date.fromisoformat(os.getenv("BENVENUTO_TODAY", "2026-10-29"))
 
 # Default persona shown on the dashboard.
