@@ -21,15 +21,13 @@ Requirements: Python 3.11+ and [uv](https://docs.astral.sh/uv/).
 ```bash
 uv sync
 uv run python -m app.seed            # (re)create data/benvenuto.db with sample data
-uv run uvicorn app.main:app --reload --port 8001
+uv run uvicorn app.main:app --reload
 ```
 
 Open:
-- Dashboard: http://localhost:8001 (persona picker in the header card; default Giulia Rossi, `E1001`)
-- Policies: http://localhost:8001/policies
-- OpenAPI docs: http://localhost:8001/docs (spec at `/openapi.json`)
-
-These instructions use port 8001.
+- Dashboard: http://localhost:8000 (persona picker in the header card; default Giulia Rossi, `E1001`)
+- Policies: http://localhost:8000/policies
+- OpenAPI docs: http://localhost:8000/docs (spec at `/openapi.json`)
 
 The database is created and seeded automatically on the first request if it does not exist. Re-run `python -m app.seed` at any time to reset the data.
 
