@@ -12,6 +12,8 @@ Benvenuto is the onboarding portal that new hires at **Banca Futura** (a fiction
 
 The portal includes a floating **assistant bubble** (hidden by default behind a feature flag until `CONCIERGE_AGENT_ID` or `BENVENUTO_ASSISTANT_ENABLED=1` is set): `POST /api/assistant` answers "Assistant not available yet" and the frontend calls it through a single `askAssistant()` function in [`app/static/js/assistant.js`](app/static/js/assistant.js).
 
+To enhance the portal with the multi-agent onboarding concierge built on Agent Development Kit (ADK) and Agent Runtime, see the functional specification in [Issue #1](https://github.com/ggalloro/benvenuto/issues/1).
+
 > All people, systems, vendors and data in this repository are synthetic.
 
 ## Run locally
