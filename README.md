@@ -92,7 +92,7 @@ tests/                    pytest suite
 ## Deploy to Cloud Run
 
 ```bash
-gcloud run deploy benvenuto --source . --region europe-west1 --allow-unauthenticated --max-instances 1
+gcloud run deploy benvenuto --source . --region <your-region> --allow-unauthenticated --max-instances 1
 ```
 
 The container seeds a fresh SQLite database in `/tmp` on startup, so each new instance starts from the sample data. Keep `--max-instances 1` so all requests share one database.
